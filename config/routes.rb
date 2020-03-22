@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
     post 'users/sign_in' => 'devise/sessions#create', :as => 'user_session'
     delete 'users/sign_out' => 'devise/sessions#destroy', :as => 'destroy_user_session'
+
+    get 'profiles/show'
   end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
