@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  field_or_organization: MyString
+  idea_description: MyText
+  keywords: MyString
+  idea_generaitor: one
+
+two:
+  field_or_organization: MyString
+  idea_description: MyText
+  keywords: MyString
+  idea_generaitor: two
