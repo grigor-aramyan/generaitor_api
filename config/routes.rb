@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post 'followers' => 'followers#create', :as => 'follower_registration'
+
+  post 'ideas' => 'ideas#create', :as => 'idea_registration'
 end
