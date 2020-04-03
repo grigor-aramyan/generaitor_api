@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post 'users/sign_in' => 'devise/sessions#create', :as => 'user_session'
     delete 'users/sign_out' => 'sessions#destroy', :as => 'destroy_user_session'
 
+    get 'profiles/show/me', to: 'profiles#me'
     get 'profiles/show/:id', to: 'profiles#show'
   end
   
