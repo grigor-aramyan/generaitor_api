@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   belongs_to :accountable, polymorphic: true
+  has_many :messages
 
   def jwt_payload
     super.merge(user_id: self.id)
