@@ -84,6 +84,37 @@ class MessagesController < ApplicationController
   end
 
   def mark_red
+    message = Message.find(params[:id])
+
+    if message == nil
+      render json: {
+        data: {
+          msg: 'Message not found'
+        }
+      }, status: 400
+    elsif message.receiver_id != current_user.id
+      render json: {
+        data: {
+          msg: 'Only receiver of messages can mark them as red'
+        }
+      }, status: 400
+    else
+      updated = message.update(red: true)
+
+      if updated
+        render json: {
+          data: {
+            msg: 'Success'
+          }
+        }, status: 200
+      else
+        render json: {
+          data: {
+            msg: 'Failed'
+          }
+        }, status: 400
+      end
+    end
   end
 
   private
