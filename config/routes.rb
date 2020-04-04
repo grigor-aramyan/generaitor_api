@@ -14,4 +14,10 @@ Rails.application.routes.draw do
   post 'followers' => 'followers#create', :as => 'follower_registration'
 
   post 'ideas' => 'ideas#create', :as => 'idea_registration'
+
+  # Messages routes
+  post 'messages', to: 'messages#create'
+  post 'messages/list', to: 'messages#list'
+  get 'messages/mark_red/:id', to: 'messages#mark_red'
+  
 end
