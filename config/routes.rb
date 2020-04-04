@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   # Messages routes
   post 'messages', to: 'messages#create'
-  post 'messages/list', to: 'messages#list'
+  get 'messages/list', to: 'messages#list'
   get 'messages/mark_red/:id', to: 'messages#mark_red'
   
 end
