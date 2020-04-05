@@ -29,11 +29,22 @@ class ProductsController < ApplicationController
   end
 
   def list
-    render json: {
-      data: {
-        msg: 'listed for ' + params[:company]
-      }
-    }, status: 200
+    organization = Organization.where(id: params[:organization_id]).first
+
+    if organization == nil
+      render json: {
+        data: {
+          products: []
+        }
+      }, status: 400
+    else
+      render json: {
+        data: {
+          products: organization.products
+        }
+      }, status: 200
+    end
+
   end
 
   private

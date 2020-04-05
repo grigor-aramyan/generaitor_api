@@ -22,5 +22,5 @@ Rails.application.routes.draw do
   
   # Products routes
   post 'products', to: 'products#create'
-  get 'products/list/:company', to: 'products#list'
+  get 'products/list/:organization_id', to: 'products#list'
 end
