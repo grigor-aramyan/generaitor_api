@@ -20,4 +20,7 @@ Rails.application.routes.draw do
   get 'messages/list', to: 'messages#list'
   get 'messages/mark_red/:id', to: 'messages#mark_red'
   
+  # Products routes
+  post 'products', to: 'products#create'
+  get 'products/list/:company', to: 'products#list'
 end
