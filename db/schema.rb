@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_082544) do
+ActiveRecord::Schema.define(version: 2020_05_13_063344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string "organization_name"
+    t.boolean "for_product", default: false, null: false
+    t.bigint "product_id", default: -1, null: false
+    t.text "branch_address"
+    t.integer "sentiment", default: 0, null: false
+    t.string "keywords", default: ""
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "followers", force: :cascade do |t|
     t.bigint "followed_by_id"

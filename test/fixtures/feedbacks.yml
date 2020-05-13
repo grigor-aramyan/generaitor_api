@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization_name: MyString
+  for_product: false
+  product: one
+  branch_address: MyText
+  sentiment: 1
+  keywords: MyString
+  content: MyText
+
+two:
+  organization_name: MyString
+  for_product: false
+  product: two
+  branch_address: MyText
+  sentiment: 1
+  keywords: MyString
+  content: MyText
