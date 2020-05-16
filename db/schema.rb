@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_063344) do
+ActiveRecord::Schema.define(version: 2020_05_16_123257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(version: 2020_05_13_063344) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "red", default: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
+
+  create_table "feedbacks_sums", id: false, force: :cascade do |t|
+    t.bigint "id", null: false
+    t.text "feedback_ids"
+    t.text "feedback_all"
+    t.text "summary"
+    t.boolean "red", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id"], name: "index_feedbacks_sums_on_id", unique: true
   end
 
   create_table "followers", force: :cascade do |t|
@@ -96,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_063344) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "ideas", "idea_generaitors"
   add_foreign_key "messages", "users"
   add_foreign_key "products", "organizations"

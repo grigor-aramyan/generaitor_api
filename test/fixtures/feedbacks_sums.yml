@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  feedback_ids: MyText
+  feedback_all: MyText
+  summary: MyText
+  red: false
+
+two:
+  feedback_ids: MyText
+  feedback_all: MyText
+  summary: MyText
+  red: false
