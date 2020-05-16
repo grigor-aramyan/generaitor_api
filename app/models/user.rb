@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :accountable, polymorphic: true
   has_many :messages
+  has_many :feedbacks
 
   def jwt_payload
     super.merge(user_id: self.id)
