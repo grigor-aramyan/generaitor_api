@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   # Products routes
   post 'products', to: 'products#create'
   get 'products/list/:organization_id', to: 'products#list'
+
+  post 'feedbacks', to: 'feedbacks#create'
 end
