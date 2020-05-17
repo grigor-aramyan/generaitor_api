@@ -22,6 +22,8 @@ gem 'devise-jwt'
 
 gem 'dry-configurable', '0.9.0'
 
+gem 'http'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
