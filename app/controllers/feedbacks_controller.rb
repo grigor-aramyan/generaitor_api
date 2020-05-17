@@ -121,6 +121,13 @@ class FeedbacksController < ApplicationController
           updated = fs.save
 
           if updated
+            delete_fs_uri = ML_API_URI + '/' + fs.id.to_s
+            response = HTTP.auth(token)
+              .delete(delete_fs_uri)
+        
+            body_payload = response.parse
+            deleted_fs_id, res_msg = body_payload['id'], body_payload['msg']
+
             render json: {
               data: {
                 msg: 'updated'
