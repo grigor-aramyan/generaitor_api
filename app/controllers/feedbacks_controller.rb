@@ -91,6 +91,73 @@ class FeedbacksController < ApplicationController
     end
   end
 
+
+  def mark_red_sum
+    profile_type = current_user.accountable_type
+    organization = current_user.accountable
+    
+    token = request.headers['Authorization']
+    fs_id = params['id']
+
+    fs = nil
+    fs_list = FeedbacksSum.where(id: fs_id)
+    if fs_list.length > 0
+      fs = fs_list.first
+    else
+      return render json: {
+        data: {
+          msg: 'not found'
+        }
+      }, status: 404
+    end
+
+    if profile_type == 'Organization'
+      f_id = fs.feedback_ids.split(':::')[0].to_i
+      f_list = Feedback.where(id: f_id)
+      if f_list.length > 0
+        f = f_list.first
+        if organization.name == f.organization_name
+          fs.red = true
+          updated = fs.save
+
+          if updated
+            render json: {
+              data: {
+                msg: 'updated'
+              }
+            }, status: 200
+          else
+            render json: {
+              data: {
+                msg: 'error occured'
+              }
+            }, status: 400
+          end
+        else
+          render json: {
+            data: {
+              msg: 'only addressed organizations can modify summaries'
+            }
+          }, status: 400
+        end
+      else
+        render json: {
+          data: {
+            msg: 'something weird happened. contact with us, please'
+          }
+        }, status: 400
+      end
+    else
+      render json: {
+        data: {
+          msg: 'only addressed organizations can modify summaries'
+        }
+      }, status: 400
+    end
+
+  end
+
+
   private
     def feedback_create_params(params)
       params.require(:feedback).permit(:organization_name, :for_product, :product_id, :branch_address, :sentiment, :keywords, :content)

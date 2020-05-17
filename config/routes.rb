@@ -25,4 +25,5 @@ Rails.application.routes.draw do
   get 'products/list/:organization_id', to: 'products#list'
 
   post 'feedbacks', to: 'feedbacks#create'
+  get 'feedbacks/sum/mark_red/:id', to: 'feedbacks#mark_red_sum'
 end
