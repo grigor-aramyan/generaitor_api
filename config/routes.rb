@@ -26,4 +26,5 @@ Rails.application.routes.draw do
 
   post 'feedbacks', to: 'feedbacks#create'
   get 'feedbacks/sum/mark_red/:id', to: 'feedbacks#mark_red_sum'
+  get 'feedbacks/mark_red/:id', to: 'feedbacks#mark_red'
 end

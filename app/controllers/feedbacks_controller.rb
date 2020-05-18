@@ -51,7 +51,16 @@ class FeedbacksController < ApplicationController
         feedback_sum['feedback_all'] = fs['feedback_all']
         feedback_sum['summary'] = fs['summary']
 
-        new_fs = FeedbacksSum.new({id: fs['id'], feedback_ids: fs['feedback_ids'], feedback_all: fs['feedback_all'], summary: fs['summary']})
+        new_fs = nil
+        new_fs_list = FeedbacksSum.where(id: fs['id'])
+        if new_fs_list.length > 0
+          new_fs = new_fs_list.first
+          new_fs.feedback_ids = fs['feedback_ids']
+          new_fs.feedback_all = fs['feedback_all']
+          new_fs.summary = fs['summary']
+        else
+          new_fs = FeedbacksSum.new({id: fs['id'], feedback_ids: fs['feedback_ids'], feedback_all: fs['feedback_all'], summary: fs['summary']})
+        end
         new_fs.save
       end
 
@@ -92,6 +101,60 @@ class FeedbacksController < ApplicationController
   end
 
 
+  def mark_red
+    profile_type = current_user.accountable_type
+    organization = current_user.accountable
+    
+    token = request.headers['Authorization']
+    f_id = params['id']
+
+    f = nil
+    f_list = Feedback.where(id: f_id)
+    if f_list.length > 0
+      f = f_list.first
+    else
+      return render json: {
+        data: {
+          msg: 'not found'
+        }
+      }, status: 404
+    end
+
+    if profile_type == 'Organization'
+      if organization.name == f.organization_name
+        f.red = true
+        updated = f.save
+
+        if updated
+          render json: {
+            data: {
+              msg: 'updated'
+            }
+          }, status: 200
+        else
+          render json: {
+            data: {
+              msg: 'error occured'
+            }
+          }, status: 400
+        end
+      else
+        render json: {
+          data: {
+            msg: 'only addressed organizations can modify feedbacks'
+          }
+        }, status: 400
+      end
+    else
+      render json: {
+        data: {
+          msg: 'only addressed organizations can modify feedbacks'
+        }
+      }, status: 400
+    end
+  end
+
+
   def mark_red_sum
     profile_type = current_user.accountable_type
     organization = current_user.accountable
@@ -121,6 +184,7 @@ class FeedbacksController < ApplicationController
           updated = fs.save
 
           if updated
+            # TODO: move delete request to background job
             delete_fs_uri = ML_API_URI + '/' + fs.id.to_s
             response = HTTP.auth(token)
               .delete(delete_fs_uri)
