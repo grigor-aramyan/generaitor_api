@@ -1,5 +1,5 @@
 class FeedbacksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:test_uri]
 
   require 'http'
 
@@ -184,13 +184,10 @@ class FeedbacksController < ApplicationController
           updated = fs.save
 
           if updated
-            # TODO: move delete request to background job
+
             delete_fs_uri = ML_API_URI + '/' + fs.id.to_s
-            response = HTTP.auth(token)
-              .delete(delete_fs_uri)
-        
-            body_payload = response.parse
-            deleted_fs_id, res_msg = body_payload['id'], body_payload['msg']
+
+            RemoveFeedbackSumJob.perform_later(delete_fs_uri, token)
 
             render json: {
               data: {
@@ -227,7 +224,6 @@ class FeedbacksController < ApplicationController
     end
 
   end
-
 
   private
     def feedback_create_params(params)
