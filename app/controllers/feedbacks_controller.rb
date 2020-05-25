@@ -1,5 +1,5 @@
 class FeedbacksController < ApplicationController
-  before_action :authenticate_user!, except: [:test_uri]
+  before_action :authenticate_user!
 
   require 'http'
 
