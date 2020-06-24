@@ -39,6 +39,7 @@ gem "actionpack", ">= 6.0.3.2"
 gem "activesupport", ">= 6.0.3.1"
 gem "activestorage", ">= 6.0.3.1"
 gem "websocket-extensions", ">= 0.1.5"
+gem "rack", ">= 2.2.3"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
